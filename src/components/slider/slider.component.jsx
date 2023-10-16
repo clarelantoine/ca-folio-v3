@@ -2,11 +2,11 @@ import { UseCanvas } from '@14islands/r3f-scroll-rig';
 import { Image } from '@react-three/drei';
 import React from 'react';
 
-const images = [
-    './src/assets/images/1.jpeg',
-    './src/assets/images/2.jpeg',
-    './src/assets/images/3.jpeg',
-];
+import image1 from '../../assets/images/1.jpeg';
+import image2 from '../../assets/images/2.jpeg';
+import image3 from '../../assets/images/3.jpeg';
+
+const images = [image1, image2, image3];
 
 const ImageWebGL = (props) => <Image {...props} />;
 
