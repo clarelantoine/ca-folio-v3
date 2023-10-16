@@ -9,7 +9,7 @@ const isCodeSandbox =
 export default defineConfig({
     plugins: [react(), glsl()],
 
-    // root: 'src/',
+    // root: 'src',
     publicDir: './public',
     base: './',
     server: {
@@ -17,7 +17,7 @@ export default defineConfig({
         open: !isCodeSandbox, // Open if it's not a CodeSandbox
     },
     build: {
-        outDir: '../dist',
+        outDir: './dist',
         emptyOutDir: true,
         sourcemap: true,
     },
