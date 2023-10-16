@@ -1,0 +1,48 @@
+{
+  "extends": [
+    "wesbos"
+  ],
+  "rules": {
+    "react/prop-types": 0,
+    "react/button-has-type": 0,
+    "react/jsx-no-constructed-context-values": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "default-param-last": 0,
+    "react-hooks/exhaustive-deps": 0,
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "endOfLine": "auto",
+        "tabWidth": 4
+      }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
+      }
+    ],
+    "react/no-unknown-property": [
+      "off",
+      {
+        "ignore": [
+          "JSX"
+        ]
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      }
+    }
+  }
+}
