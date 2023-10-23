@@ -1,8 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import VirtualScroll from 'virtual-scroll';
+import { useTexture } from '@react-three/drei';
 import { IMAGES } from '../resources';
 import Title from './Title';
+import { PortfolioContext } from '../contexts/portfolio.context';
 import Image from './Image';
 
 // eslint-disable-next-line no-unused-vars
@@ -10,8 +12,13 @@ let scrollPositionY = 0;
 
 const Experience = () => {
     const scroller = new VirtualScroll();
-
     const group = useRef();
+
+    const { setImages } = useContext(PortfolioContext);
+
+    const imageArray = IMAGES.map((img) => img.image);
+    const loadImageArray = useTexture(imageArray);
+    setImages(loadImageArray);
 
     useEffect(() => {
         group.current.position.y = -(IMAGES.length - 1) / 2;
@@ -19,7 +26,7 @@ const Experience = () => {
         scroller.on((event) => {
             scrollPositionY = event.y / 2000;
         });
-    });
+    }, []);
 
     useFrame(() => {
         group.current.position.y = -(IMAGES.length - 1) / 2;
