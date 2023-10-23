@@ -40,7 +40,7 @@ const Image = ({ scale, ...props }) => {
             [0, 0, 1]
         );
 
-        if (!activeCase) {
+        if (activeCase === null) {
             easing.damp3(
                 image.current.position,
                 [

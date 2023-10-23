@@ -21,7 +21,7 @@ const Experience = () => {
     setImages(loadImageArray);
 
     useEffect(() => {
-        group.current.position.y = -(IMAGES.length - 1) / 2;
+        group.current.position.y = -(IMAGES.length - 0.6) / 2;
 
         scroller.on((event) => {
             scrollPositionY = event.y / 2000;
@@ -29,7 +29,7 @@ const Experience = () => {
     }, []);
 
     useFrame(() => {
-        group.current.position.y = -(IMAGES.length - 1) / 2;
+        group.current.position.y = -(IMAGES.length - 0.6) / 2;
     });
 
     return (
