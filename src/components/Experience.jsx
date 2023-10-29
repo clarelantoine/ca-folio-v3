@@ -2,6 +2,7 @@ import { useContext, useEffect, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import VirtualScroll from 'virtual-scroll';
 import { useTexture } from '@react-three/drei';
+import { useControls } from 'leva';
 import { IMAGES } from '../resources';
 import Title from './Title';
 import { PortfolioContext } from '../contexts/portfolio.context';
@@ -13,6 +14,15 @@ let scrollPositionY = 0;
 const Experience = () => {
     const scroller = new VirtualScroll();
     const group = useRef();
+
+    // const { progress } = useControls({
+    //     progress: {
+    //         value: 0,
+    //         min: 0,
+    //         max: 1,
+    //         step: 0.01,
+    //     },
+    // });
 
     const { setImages } = useContext(PortfolioContext);
 

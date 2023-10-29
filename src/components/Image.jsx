@@ -4,20 +4,26 @@ import { extend, useFrame, useThree } from '@react-three/fiber';
 import { shaderMaterial, useTexture } from '@react-three/drei';
 
 import { easing } from 'maath';
+import { useControls } from 'leva';
+import gsap from 'gsap';
 import vertexShader from '../shaders/vertex.glsl';
 import fragmentShader from '../shaders/fragment.glsl';
+import waveVertexShader from '../shaders/wave-vertex.glsl';
 import { PortfolioContext } from '../contexts/portfolio.context';
 import { IMAGES } from '../resources';
 
 const ImageShaderMaterial = shaderMaterial(
     {
         tMap: new THREE.Texture(),
-        uPlaneSizes: [0, 0],
-        uImageSizes: [0, 0],
-        uViewportSizes: [0, 0],
+        uPlaneSizes: new THREE.Vector2(0, 0),
+        uImageSizes: new THREE.Vector2(0, 0),
+        uViewportSizes: new THREE.Vector2(0, 0),
         uStrength: 0,
+
+        uProgress: 0,
+        uTime: 0,
     },
-    vertexShader,
+    waveVertexShader,
     fragmentShader
 );
 
@@ -32,7 +38,40 @@ const Image = ({ scale, ...props }) => {
 
     const texture = useTexture(IMAGES[hoverCase].image);
 
-    const { width, height } = useThree((state) => state.viewport);
+    // const { progress } = useControls({
+    //     progress: {
+    //         value: 0,
+    //         min: 0,
+    //         max: 1,
+    //         step: 0.01,
+    //     },
+    // });
+
+    const camera = useThree((state) => state.camera);
+    const viewport = useThree((state) => state.viewport);
+
+    const { width: vWidth, height: vHeight } = viewport.getCurrentViewport(
+        camera,
+        [0, 0, 1]
+    );
+
+    if (activeCase !== null) {
+        const tl = gsap.timeline({
+            defaults: { duration: 2, ease: 'expo.inOut' },
+        });
+
+        tl.to(
+            mat.current.uniforms.uPlaneSizes.value,
+            { x: vWidth / 2, y: vHeight },
+            0
+        )
+            .to(image.current.scale, { x: vWidth / 2, y: vHeight }, 0)
+            .to(image.current.position, { x: -image.current.scale.x, y: 0 }, 0)
+
+            .to(mat.current.uniforms.uProgress, { value: 1, duration: 1 }, 0)
+            .to(mat.current.uniforms.uProgress, { value: 0, duration: 1 }, 1)
+            .call(() => console.log('animation done'));
+    }
 
     useFrame((state, delta) => {
         const viewport = state.viewport.getCurrentViewport(
@@ -52,35 +91,7 @@ const Image = ({ scale, ...props }) => {
                 delta
             );
         } else {
-            easing.damp2(
-                image.current.position,
-                [-image.current.scale.x / 2, 0],
-                0.14,
-                delta
-            );
-
-            easing.damp2(
-                image.current.scale,
-                [viewport.width / 2, viewport.height],
-                0.14,
-                delta
-            );
-
-            easing.damp(
-                mat.current.uniforms.uPlaneSizes.value,
-                0,
-                width / 2,
-                0.14,
-                delta
-            );
-
-            easing.damp(
-                mat.current.uniforms.uPlaneSizes.value,
-                1,
-                height,
-                0.14,
-                delta
-            );
+            mat.current.uniforms.uTime.value = state.clock.elapsedTime * 2.5;
         }
     });
     return (
@@ -93,7 +104,7 @@ const Image = ({ scale, ...props }) => {
                 tMap={texture}
                 uPlaneSizes={scale}
                 uImageSizes={[texture.image.width, texture.image.height]}
-                uViewportSizes={[width, height]}
+                // uViewportSizes={[width, height]}
             />
         </mesh>
         // </group>
