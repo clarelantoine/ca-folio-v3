@@ -4,6 +4,7 @@ import { useFrame } from '@react-three/fiber';
 import { useContext, useEffect, useRef } from 'react';
 // import { motion } from 'framer-motion-3d';
 import { easing } from 'maath';
+import { useLocation } from 'react-router-dom';
 import { PortfolioContext } from '../contexts/portfolio.context';
 
 const Title = ({ text, index, ...props }) => {
@@ -11,6 +12,8 @@ const Title = ({ text, index, ...props }) => {
         useContext(PortfolioContext);
 
     const title = useRef();
+
+    const location = useLocation();
 
     const handlePointerEnter = () => {
         if (activeCase === null) {
@@ -52,6 +55,7 @@ const Title = ({ text, index, ...props }) => {
             onPointerLeave={handlePointerLeave}
             onClick={handleClick}
             clipRect={[-10, -1, 10, 1]}
+            visible={location.pathname === '/about'}
         >
             {text}
             <meshBasicMaterial blending={THREE.AdditiveBlending} />

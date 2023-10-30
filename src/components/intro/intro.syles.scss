@@ -1,0 +1,26 @@
+.intro {
+    background: #121212;
+
+    .intro__text {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 3rem;
+        line-height: 1.5;
+        text-transform: uppercase;
+
+
+
+        .line {
+            // overflow-y: hidden;
+
+
+            .word {
+                // transform: translateY(100%);
+                will-change: transform;
+                vertical-align: top;
+            }
+        }
+    }
+}

@@ -9,6 +9,7 @@ import Experience from './components/Experience';
 
 import './index.scss';
 import { PortfolioProvider } from './contexts/portfolio.context';
+import Intro from './components/intro/intro.component';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
@@ -30,6 +31,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 </Canvas>
                 <App />
                 <Loader />
+                <Intro />
             </PortfolioProvider>
         </BrowserRouter>
     </React.StrictMode>
